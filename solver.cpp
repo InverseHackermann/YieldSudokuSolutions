@@ -37,16 +37,16 @@ int main() {
 
   const std::function<std::function<bool(int r, int c)>()> make_solution_generator =
     [&](){
+      int ip = 0;
+      int nr = 0;
+      int nc = 0;
+      int v = 0;
+      std::function<bool(int, int)> generate_solution;
       return [
-        &,
-        gen_state = 0,
-        nr = 0,
-        nc = 0,
-        v = 0,
-        generate_solution = std::function<bool(int, int)>()
-      ](int r, int c) mutable -> bool {switch(gen_state){case 0:;
+        &, ip, nr, nc, v, generate_solution
+      ](int r, int c) mutable -> bool {switch(ip){case 0:;
         if (r >= 9) {
-          gen_state = 1; return true; case 1:;
+          ip = 1; return true; case 1:;
           return false;
         }
         if ((nc = c + 1) >= 9) {
@@ -58,7 +58,7 @@ int main() {
         if (board[r][c] > 0) {
           generate_solution = make_solution_generator();
           while (generate_solution(nr, nc)) {
-            gen_state = 2; return true; case 2:;
+            ip = 2; return true; case 2:;
           }
           return false;
         }
@@ -66,7 +66,7 @@ int main() {
           if (set_square(r, c, v)) {
             generate_solution = make_solution_generator();
             while (generate_solution(nr, nc)) {
-              gen_state = 3; return true; case 3:;
+              ip = 3; return true; case 3:;
             }
             clear_square(r, c);
           }
