@@ -2,7 +2,6 @@
 #include <bitset>
 #include <functional>
 #include <iostream>
-#include <optional>
 
 int main() {
   std::array<std::array<int, 9>, 9> board = {};
